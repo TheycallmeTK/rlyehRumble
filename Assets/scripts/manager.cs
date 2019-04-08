@@ -12,6 +12,12 @@ public class manager : MonoBehaviour
     public RawImage hasturThumb;
     public RawImage nyarThumb;
     public Canvas characterSelect;
+
+    public GameObject cthulu;
+    public GameObject hustar;
+    public GameObject nyar;
+    public GameObject yog;
+    public GameObject Shoggoth;
     // Start is called before the first frame update
     void Start()
     {
