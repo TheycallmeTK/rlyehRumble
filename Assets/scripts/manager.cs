@@ -57,6 +57,9 @@ public class manager : MonoBehaviour
         endGame.transform.Find("hasturWin").gameObject.SetActive(false);
         endGame.transform.Find("nyarWin").gameObject.SetActive(false);
         endGame.transform.Find("lost").gameObject.SetActive(false);
+
+        title.enabled = true;
+
         if (title)
         {
             title.enabled = true;
@@ -66,6 +69,7 @@ public class manager : MonoBehaviour
         {
             characterSelect.enabled = true;
         }
+
         endGame.enabled = false;
     }
 
@@ -94,6 +98,15 @@ public class manager : MonoBehaviour
             endGame.enabled = true;
             endGame.gameObject.transform.Find("lost").gameObject.SetActive(true);
         }
+    }
+
+    
+
+    //have a function to move on from info screen to character select
+    public void infoScreenTransition()
+    {
+        info.enabled = false;
+        characterSelect.enabled = true;
     }
 
     public void takeTurn(int move)
@@ -128,10 +141,20 @@ public class manager : MonoBehaviour
     public void quitGame() {
         Application.Quit();
     }
+
+    //have a function to enable info screen and keep characterSelect as disabled
     public void infoScreen()
     {
+        characterSelect.enabled = false;
         title.enabled = false;
         info.enabled = true;
+    }
+
+    //move from info to character select screen
+    public void characterSelectScreen()
+    {
+        info.enabled = false;
+        characterSelect.enabled = true;
     }
 
     public void startGame()
