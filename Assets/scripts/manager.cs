@@ -102,12 +102,7 @@ public class manager : MonoBehaviour
 
     
 
-    //have a function to move on from info screen to character select
-    public void infoScreenTransition()
-    {
-        info.enabled = false;
-        characterSelect.enabled = true;
-    }
+   
 
     public void takeTurn(int move)
     {
@@ -153,6 +148,7 @@ public class manager : MonoBehaviour
     //move from info to character select screen
     public void characterSelectScreen()
     {
+        title.enabled = false;
         info.enabled = false;
         characterSelect.enabled = true;
     }
