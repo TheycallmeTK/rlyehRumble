@@ -58,6 +58,11 @@ public class manager : MonoBehaviour
         endGame.transform.Find("nyarWin").gameObject.SetActive(false);
         endGame.transform.Find("lost").gameObject.SetActive(false);
 
+        characterSelect.transform.Find("cthInfo").gameObject.SetActive(false);
+        characterSelect.transform.Find("hasturInfo").gameObject.SetActive(false);
+        characterSelect.transform.Find("nyarInfo").gameObject.SetActive(false);
+
+
         title.enabled = true;
 
         if (title)
@@ -145,6 +150,13 @@ public class manager : MonoBehaviour
         info.enabled = true;
     }
 
+    //have a function to return to the title screen
+    public void menuScreen()
+    {
+        info.enabled = false;
+        title.enabled = true;
+    }
+
     //move from info to character select screen
     public void characterSelectScreen()
     {
@@ -155,6 +167,9 @@ public class manager : MonoBehaviour
 
     public void startGame()
     {
+        characterSelect.transform.Find("cthInfo").gameObject.SetActive(false);
+        characterSelect.transform.Find("hasturInfo").gameObject.SetActive(false);
+        characterSelect.transform.Find("nyarInfo").gameObject.SetActive(false);
         characterSelect.enabled = false;
     }
 
@@ -163,23 +178,45 @@ public class manager : MonoBehaviour
         
         switch (name)
         {
+            //the player has selected Cthulu
             case "cthulu":
+                //apply thumbnail changes
                 cthuluThumb.color = Color.green;
                 hasturThumb.color = Color.black;
                 nyarThumb.color = Color.black;
+                //display monster info
+                characterSelect.transform.Find("cthInfo").gameObject.SetActive(true);
+                characterSelect.transform.Find("hasturInfo").gameObject.SetActive(false);
+                characterSelect.transform.Find("nyarInfo").gameObject.SetActive(false);
                 chosenChar = cthulu.gameObject;
+               
                 break;
+            //the player has selected Hastur
             case "hastur":
+                //apply thumbnail changes
                 cthuluThumb.color = Color.black;
                 hasturThumb.color = Color.green;
                 nyarThumb.color = Color.black;
+                //display monster info
+                characterSelect.transform.Find("cthInfo").gameObject.SetActive(false);
+                characterSelect.transform.Find("hasturInfo").gameObject.SetActive(true);
+                characterSelect.transform.Find("nyarInfo").gameObject.SetActive(false);
                 chosenChar = hustar.gameObject;
+
                 break;
+            //the player has selected nyarlarthotep
             case "nyar":
+                //thumbnail changes
                 cthuluThumb.color = Color.black;
                 nyarThumb.color = Color.green;
                 hasturThumb.color = Color.black;
+                //display monster info
+                characterSelect.transform.Find("cthInfo").gameObject.SetActive(false);
+                characterSelect.transform.Find("hasturInfo").gameObject.SetActive(false);
+                characterSelect.transform.Find("nyarInfo").gameObject.SetActive(true);
                 chosenChar = nyar.gameObject;
+
+               
                 break;
         }
         
