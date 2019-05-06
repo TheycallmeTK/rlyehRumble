@@ -7,27 +7,36 @@ public class nyar : MonoBehaviour
 {
     public RawImage healthBar;
     public float health;
+    public Text healthDisplay;
     public GameObject yog;
     public GameObject azathoth;
     GameObject manager;
     manager mng;
     public int moveDisabled = 0;
     public bool activeChar;
+    public int combo;
+    int lastMove;
+    public float multiplier;
     // Start is called before the first frame update
     void Start()
     {
+        multiplier = 1.0f;
         manager = GameObject.Find("manager");
         mng = manager.GetComponent<manager>();
         health = 100;
         yog = GameObject.Find("yog");
         azathoth = GameObject.Find("azathoth");
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(activeChar)
-        healthBar.rectTransform.sizeDelta = new Vector2(health, 100);
+        if (activeChar)
+        {
+            healthBar.rectTransform.sizeDelta = new Vector2(health, 100);
+            healthDisplay.text = health.ToString();
+        }
 
         if (health > 100)
         {
@@ -38,10 +47,11 @@ public class nyar : MonoBehaviour
         {
             mng.lost = true;
         }
+        
     }
     public float moveOne()
     {
-        mng.playerStatus = "Nyaralathotep uses Mimicry. You use one of the enemy's moves against him.";
+        mng.playerStatus = "Nyaralathotep uses Mimicry. He uses one of the enemy's moves against him.";
         GameObject enemy = mng.currentEnemy;
         yog yogScript;
         azathoth azaScript;
@@ -61,15 +71,15 @@ public class nyar : MonoBehaviour
 
     public float moveTwo()
     {
-        mng.playerStatus = "Nyaralathotep uses Reveal Self.";
-        return 10 * Random.Range(1, 2);
+        mng.playerStatus = "Nyaralathotep uses Reveal Self. The enemy takes moderate damage.";
+        return 13 * Random.Range(1, 2)*multiplier;
     }
 
     public float moveThree()
     {
         mng.playerStatus = "Nyaralathotep uses Elevated Siphon. You drain a lot of the enemy's health.";  
-        health += 10 * Random.Range(1, 2);
-        return 8 * Random.Range(1, 2);
+        health += 10 * Random.Range(1, 2)*multiplier;
+        return 13 * Random.Range(1, 2)*multiplier;
 
     }
 
@@ -95,7 +105,7 @@ public class nyar : MonoBehaviour
         {
             mng.playerStatus = "Nyaralathotep uses Concussed Staff. The enemy avoids being stunned";
         }
-        return 5 * Random.Range(1, 2);
+        return 5 * Random.Range(1, 2)*multiplier;
     }
 
     public float handleMoves(int move)
@@ -104,6 +114,32 @@ public class nyar : MonoBehaviour
         {
             mng.playerStatus = "This move has been disabled";
             return 0;
+        }
+        if (lastMove == move)
+        {
+            if (combo < 3)
+            {
+                combo++;
+                mng.combo = combo;
+            }
+        }
+        else
+        {
+            combo = 2;
+            mng.combo = combo;
+        }
+        lastMove = move;
+        if (combo == 2)
+        {
+            multiplier = 1.2f;
+        }
+        if (combo == 3)
+        {
+            multiplier = 1.4f;
+        }
+        if(combo == 1)
+        {
+            multiplier = 1.0f;
         }
         switch (move)
         {

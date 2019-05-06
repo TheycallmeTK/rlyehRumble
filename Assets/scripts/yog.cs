@@ -11,12 +11,14 @@ public class yog : MonoBehaviour
     public RawImage healthBar;
     public float health;
     public int moveDisabled = 0;
-    float multiplier;
+    public float multiplier;
     manager mng;
     public bool activeChar;
     int blockTurns = 0;
     public int stunCounter;
     bool useBlocked;
+    public Text healthDisplay;
+    
     
     // Start is called before the first frame update
     void Start()
@@ -25,22 +27,27 @@ public class yog : MonoBehaviour
         mng = GameObject.Find("manager").GetComponent<manager>();
         multiplier = 1.3f;
         stunCounter = 0;
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(activeChar)
-        healthBar.rectTransform.sizeDelta = new Vector2(health, 100);
+        if (activeChar)
+        {
+            healthBar.rectTransform.sizeDelta = new Vector2(health, 100);
+            healthDisplay.text = health.ToString();
+        }
 
-        if(health > 100)
+        if (health > 100)
         {
             health = 100;
         }
 
         if (health <= 0)
         {
-            mng.won = true;
+            //mng.won = true;
+            StartCoroutine(mng.transition());
         }
     }
 
@@ -121,15 +128,15 @@ public class yog : MonoBehaviour
 
     public float moveThree()
     {
-        mng.bossStatus = "Yog Sothoth uses Omniscience. Its attack power rises significantly";
+        mng.bossStatus = "Yog Sothoth uses Omniscience to see the attacks ahead. His attack power rises significantly";
         multiplier+= multiplier*0.3f;
-        health += 10;
+        mng.enemyHeal= 10;
         return 0;
     }
 
     public float moveFour()
     {
-        mng.bossStatus = "Yog Sothoth uses Spacial Horror. You take heavy damage";
+        mng.bossStatus = "Yog Sothoth uses Spacial Horror to warp your surroundings. You take heavy damage";
         return 15 * multiplier;
     }
 }
