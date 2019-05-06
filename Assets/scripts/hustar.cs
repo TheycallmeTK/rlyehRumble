@@ -18,6 +18,13 @@ public class hustar : MonoBehaviour
     int shieldCounter;
    
     int lastMove;
+
+    //audio
+    public AudioSource flame;
+    public AudioSource siphon;
+    public AudioSource yellowSigil;
+    public AudioSource refractedReality;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -50,12 +57,14 @@ public class hustar : MonoBehaviour
     public float moveOne()
     {
         mng.playerStatus = "Hastur uses Flame";
+        flame.Play();
         return (10f * Random.Range(1, 2))*multiplier;
     }
 
     public float moveTwo()
     {
         mng.playerStatus = "Hastur uses Siphon. He takes some of the enemy's health";
+        siphon.Play();
         health += 10 * Random.Range(1, 2)*multiplier;
         
         return 5 * Random.Range(1, 2)*multiplier;
@@ -64,6 +73,7 @@ public class hustar : MonoBehaviour
     public float moveThree()
     {
         mng.playerStatus = "Hastur uses Yellow Sigil to poison the enemy";
+        yellowSigil.Play();
         if(mng.currentEnemy.name == "yog")
         {
             yog script = mng.currentEnemy.GetComponent<yog>();
@@ -82,6 +92,7 @@ public class hustar : MonoBehaviour
     public float moveFour()
     {
         mng.playerStatus = "Hastur uses Refracted Reality to guard himself. Shield up for five turns.";
+        refractedReality.Play();
         shield = true;
         shieldCounter = 5;
         return 0;

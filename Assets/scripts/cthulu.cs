@@ -19,6 +19,13 @@ public class cthulu : MonoBehaviour
     public bool summoned;
     public int minionCounter;
     public float minionHealth;
+
+    //audio 
+    public AudioSource jab;
+    public AudioSource titanDrop;
+    public AudioSource summon;
+    public AudioSource regeneration;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -53,7 +60,7 @@ public class cthulu : MonoBehaviour
     public float moveOne()
     {
         mng.playerStatus = "Cthulu Jabs the enemy";
-        
+        jab.Play();
         return 10 * Random.Range(1, 2)*multiplier;
     }
     
@@ -63,6 +70,7 @@ public class cthulu : MonoBehaviour
         if (isCharging)
         {
             mng.playerStatus = "Cthulu unleashes the full force of Titan Drop";
+            titanDrop.Play();
             isCharging = false;
             switch (combo)
             {
@@ -85,6 +93,7 @@ public class cthulu : MonoBehaviour
     public float moveThree()
     {
         mng.playerStatus = "Cthulu summons a minion";
+        summon.Play();
         summoned = true;
         minionCounter = 4;
         minion.transform.position = new Vector3(transform.position.x + 2, 0, 0);
@@ -95,6 +104,7 @@ public class cthulu : MonoBehaviour
     public float moveFour()
     {
         mng.playerStatus = "Cthulu regenerates some health";
+        regeneration.Play();
         health += 20;
         return 0;
     }

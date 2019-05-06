@@ -17,6 +17,13 @@ public class nyar : MonoBehaviour
     public int combo;
     int lastMove;
     public float multiplier;
+
+    //audio
+    public AudioSource mimicry;
+    public AudioSource revealSelf;
+    public AudioSource elevatedSiphon;
+    public AudioSource concussedStaff;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -52,6 +59,7 @@ public class nyar : MonoBehaviour
     public float moveOne()
     {
         mng.playerStatus = "Nyaralathotep uses Mimicry. He uses one of the enemy's moves against him.";
+        mimicry.Play();
         GameObject enemy = mng.currentEnemy;
         yog yogScript;
         azathoth azaScript;
@@ -72,12 +80,14 @@ public class nyar : MonoBehaviour
     public float moveTwo()
     {
         mng.playerStatus = "Nyaralathotep uses Reveal Self. The enemy takes moderate damage.";
+        revealSelf.Play();
         return 13 * Random.Range(1, 2)*multiplier;
     }
 
     public float moveThree()
     {
-        mng.playerStatus = "Nyaralathotep uses Elevated Siphon. You drain a lot of the enemy's health.";  
+        mng.playerStatus = "Nyaralathotep uses Elevated Siphon. You drain a lot of the enemy's health.";
+        elevatedSiphon.Play();
         health += 10 * Random.Range(1, 2)*multiplier;
         return 13 * Random.Range(1, 2)*multiplier;
 
@@ -101,9 +111,11 @@ public class nyar : MonoBehaviour
                 script.stunCounter = 3;
             }
             mng.playerStatus = "Nyaralathotep uses Concussed Staff. The enemy is stunned";
+            concussedStaff.Play();
         } else
         {
             mng.playerStatus = "Nyaralathotep uses Concussed Staff. The enemy avoids being stunned";
+            concussedStaff.Play();
         }
         return 5 * Random.Range(1, 2)*multiplier;
     }
